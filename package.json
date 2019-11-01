@@ -1,0 +1,13 @@
+{
+  "name": "Alexa-GaragePi",
+  "version": "0.1.0",
+  "description": "Allows Alexa to control GaragePi.",
+  "main": "index.js",
+  "author": "Chase Chou",
+  "license": "ISC",
+  "dependencies": {
+    "fauxmojs": "^1.0.3",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}
