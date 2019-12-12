@@ -13,7 +13,7 @@ let fauxMo = new FauxMo({
       port: 12000,
       handler: (action, name, callback) => {
         console.log('garage-pi clickbutton:', action, ' name: ', name);
-        garagepi(callback);
+        garagepi(callback, action);
       }
     },
     {
@@ -46,15 +46,18 @@ function garageDoorSensor(callback, action) {
     });
 }
 
-function garagepi(callback) {
+function garagepi(callback, action) {
   const options = {
     method: 'GET',
-    uri: server + '/api/clickbutton',
+    uri: server + '/api/openclose',
+    qs: {
+        state: action,
+    }
   };
   request(options)
     .then(function (response) {
       console.log('done: ' + response);
-      callback(false);
+      callback(response == 'open' ? true : false);
     })
     .catch(function (err) {
       console.log('error: ' + err);
