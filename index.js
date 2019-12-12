@@ -12,12 +12,39 @@ let fauxMo = new FauxMo({
       name: 'garage',
       port: 12000,
       handler: (action, name, callback) => {
-        console.log('garage-pi clickbutton:', action);
+        console.log('garage-pi clickbutton:', action, ' name: ', name);
         garagepi(callback);
+      }
+    },
+    {
+      name: 'garage door sensor',
+      port: 12001,
+      handler: (action, name, callback) => {
+        console.log('garageDoorSensor:', action, ' name: ', name);
+        garageDoorSensor(callback, action);
       }
     }
   ]
 });
+
+function garageDoorSensor(callback, action) {
+  const options = {
+    method: 'GET',
+    uri: `${server}/api/sensor`,
+    qs: {
+        state: action,
+    }
+  };
+  console.log(callback);
+  request(options)
+    .then(function (response) {
+      console.log('sensor: ' + response);
+      callback(response == 'open' ? true : false);
+    })
+    .catch(function (err) {
+      console.log('error: ' + err);
+    });
+}
 
 function garagepi(callback) {
   const options = {
