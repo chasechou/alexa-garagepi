@@ -6,9 +6,12 @@
   "author": "Chase Chou",
   "license": "ISC",
   "dependencies": {
-    // pull fauxmojs-master since deviceEndpoints.js has a fix that is not in 1.0.3
+    "console-stamp": "^0.2.9",
     "fauxmojs": "^1.0.3",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
+  },
+  "comments": {
+    "dependencies": "pull fauxmojs-master since deviceEndpoints.js has a fix that is not in 1.0.3"
   }
 }

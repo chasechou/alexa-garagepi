@@ -1,5 +1,7 @@
 'use strict';
 
+require('console-stamp')(console, 'yyyy/mm/dd HH:MM:ss');
+
 const FauxMo = require('fauxmojs');
 const request = require('request-promise');
 const ipAddress = '192.168.86.60';
