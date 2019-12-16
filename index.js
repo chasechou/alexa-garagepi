@@ -51,7 +51,7 @@ function garageDoorSensor(callback, action) {
 function garagepi(callback, action) {
   const options = {
     method: 'GET',
-    uri: server + '/api/openclose',
+    uri: server + '/api/clickbutton',
     qs: {
         state: action,
     }
