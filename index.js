@@ -14,55 +14,40 @@ let fauxMo = new FauxMo({
       name: 'garage',
       port: 12000,
       handler: (action, name, callback) => {
-        console.log('garage-pi clickbutton:', action, ' name: ', name);
-        garagepi(callback, action);
+        sendRequest(action, name, callback, '/api/clickbutton');
       }
     },
     {
       name: 'garage door sensor',
       port: 12001,
       handler: (action, name, callback) => {
-        console.log('garageDoorSensor:', action, ' name: ', name);
-        garageDoorSensor(callback, action);
+        sendRequest(action, name, callback, '/api/sensor');
       }
     }
   ]
 });
 
-function garageDoorSensor(callback, action) {
-  const options = {
-    method: 'GET',
-    uri: `${server}/api/sensor`,
-    qs: {
-        state: action,
-    }
-  };
-  console.log(callback);
-  request(options)
-    .then(function (response) {
-      console.log('sensor: ' + response);
-      callback(response == 'open' ? true : false);
-    })
-    .catch(function (err) {
-      console.log('error: ' + err);
-    });
-}
+function sendRequest(action, name, callback, api) {
+  if(action === 'status') {
+    api = '/api/status';
+  } else {
+    console.log(`name:  ${name}  action: ${action}  api: ${api}`);
+  }
 
-function garagepi(callback, action) {
   const options = {
     method: 'GET',
-    uri: server + '/api/clickbutton',
+    uri: server + api,
     qs: {
         state: action,
     }
   };
   request(options)
     .then(function (response) {
-      console.log('done: ' + response);
-      callback(response == 'open' ? true : false);
+      const state = response === 'open' ? true : false;
+      callback(state);
     })
     .catch(function (err) {
-      console.log('error: ' + err);
+      console.log(`name:  ${name}  action: ${action}  error: ${err}`);
     });
 }
 
